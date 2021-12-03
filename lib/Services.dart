@@ -29,9 +29,9 @@ class Services {
       var map = new Map<String, dynamic>();
       map["action"] = _GET_ACTION;
       final response = await http.post(Uri.parse(ROOT), body: map);
+
       if (response.statusCode == 200) {
         List<Vale> list = parsePhotos(response.body);
-        print(list);
         return list;
       } else {
         throw List<Vale>.empty();

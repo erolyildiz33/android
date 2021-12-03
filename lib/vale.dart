@@ -1,15 +1,15 @@
 class Vale {
   String id;
   String plaka;
-  String time;
+  String zaman;
 
-  Vale({required this.id, required this.plaka, required this.time});
+  Vale({required this.id, required this.plaka, required this.zaman});
 
   factory Vale.fromJson(Map<String, dynamic> json) {
     return Vale(
       id: json['id'] as String,
       plaka: json['plaka'] as String,
-      time: json['time'] as String,
+      zaman: json['zaman'] as String,
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 import 'vale.dart';
 import 'Services.dart';
 
@@ -16,22 +18,25 @@ class Page1State extends State<Page1> {
   late GlobalKey<ScaffoldState> _scaffoldKey;
 
   late Vale _selectedVale;
-
+  late IO.Socket socket;
   @override
   void initState() {
-    super.initState();
     _Vales = [];
 
     _scaffoldKey = GlobalKey();
-
+    super.initState();
     _getVales();
+    _connect();
   }
 
-  _createTable() {
-    Services.liste().then((result) {
-      if ('success' == result) {
-        _getVales();
-      }
+  void _connect() async {
+    socket = IO.io('http://185.95.164.242:3300/', <String, dynamic>{
+      'transports': ['websocket'],
+    });
+
+    socket.on('vale', (res) {
+      print('veri geldi');
+      // _getVales();
     });
   }
 
@@ -88,7 +93,7 @@ class Page1State extends State<Page1> {
                 ),
                 DataCell(
                   Text(
-                    Vale.time,
+                    Vale.zaman,
                   ),
                 ),
                 DataCell(
@@ -116,12 +121,6 @@ class Page1State extends State<Page1> {
       appBar: AppBar(
         title: Text("Liste"),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              _createTable();
-            },
-          ),
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {

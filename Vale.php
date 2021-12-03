@@ -7,9 +7,6 @@ class Vale extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-
-        
-
     }
 
 
@@ -52,24 +49,34 @@ if($action=='UPDATE_EMP')
 
 if ($action=='GET_ALL'){
 
-    $result=$this->query("SELECT id,plaka,time from vale where  status=0");
+    $result=$this->db->query("SELECT id,plaka,zaman from vale where status=0");
     if(!empty($result)){
-         $dbdata = array();
-       foreach ($result->result_array() as $row)
-{
+     $dbdata = array();
+     foreach ($result->result_array() as $row)
+     {
         $dbdata[]=$row;
-}
- echo json_encode($dbdata);
-    }else{
-        echo "error";
     }
+    echo json_encode($dbdata);
+}else{
+    echo "error";
+}
 
 
 
 
 }
+}
 
-
+public function register()
+{
+    $data =['plaka'=>strtoupper($this->input->post("plaka")),
+    'masa_id'=> $this->input->post("masano"),
+    'zaman'=>$this->input->post("zaman")
+    ];     
+    if($this->db->insert('vale',$data)){
+         echo "oldu";
+    }
+   
 
 }
 }
