@@ -22,22 +22,18 @@ class Page1State extends State<Page1> {
   @override
   void initState() {
     _Vales = [];
-
-    _scaffoldKey = GlobalKey();
-    super.initState();
-    _getVales();
-    _connect();
-  }
-
-  void _connect() async {
-    socket = IO.io('http://185.95.164.242:3300/', <String, dynamic>{
+    IO.Socket socket = IO.io('http://185.95.164.242:3300/', <String, dynamic>{
       'transports': ['websocket'],
     });
-
-    socket.on('vale', (res) {
-      print('veri geldi');
-      // _getVales();
+    socket.on('vale', (data) {
+      _getVales();
     });
+    socket.on('disconnect', (_) => print('disconnect'));
+    socket.connect();
+    _scaffoldKey = GlobalKey();
+
+    super.initState();
+    _getVales();
   }
 
   _getVales() {
