@@ -7,8 +7,6 @@ import 'Services.dart';
 class Page1 extends StatefulWidget {
   Page1() : super();
 
-  final String title = "Flutter Data Table";
-
   @override
   Page1State createState() => Page1State();
 }
@@ -16,7 +14,7 @@ class Page1 extends StatefulWidget {
 class Page1State extends State<Page1> {
   late List<Vale> _Vales;
   late GlobalKey<ScaffoldState> _scaffoldKey;
-
+  final String title = "Flutter Data Table";
   late Vale _selectedVale;
   late IO.Socket socket;
   @override
@@ -58,17 +56,17 @@ class Page1State extends State<Page1> {
         child: DataTable(
           columns: [
             DataColumn(
-                label: Text("ID"),
+                label: Text("SIRA NO"),
                 numeric: false,
                 tooltip: "This is the Vale id"),
             DataColumn(
                 label: Text(
-                  "FIRST",
+                  "PLAKA",
                 ),
                 numeric: false,
                 tooltip: "This is the last name"),
             DataColumn(
-                label: Text("LAST"),
+                label: Text("SAAT"),
                 numeric: false,
                 tooltip: "This is the last name"),
             DataColumn(
@@ -80,7 +78,7 @@ class Page1State extends State<Page1> {
             (Vale) => DataRow(
               cells: [
                 DataCell(
-                  Text(Vale.id),
+                  Text((_Vales.indexOf(Vale) + 1).toString()),
                 ),
                 DataCell(
                   Text(
@@ -115,7 +113,7 @@ class Page1State extends State<Page1> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("Liste"),
+        title: Text(title.toString()),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.refresh),
